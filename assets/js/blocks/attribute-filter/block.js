@@ -17,8 +17,36 @@ import Label from '@woocommerce/base-components/filter-element-label';
 import FilterSubmitButton from '@woocommerce/base-components/filter-submit-button';
 import isShallowEqual from '@wordpress/is-shallow-equal';
 import { decodeEntities } from '@wordpress/html-entities';
-import { Notice } from '@wordpress/components';
+import { Notice, FormTokenField } from 'wordpress-components';
 
+const MyFormTokenField = ( {
+	attributeLabel,
+	isLoading,
+	displayedOptions,
+	onChange,
+	checked,
+} ) => {
+	const attributeIdSuggestions = isLoading
+		? []
+		: displayedOptions.map( ( attribute ) => attribute.value );
+
+	return (
+		<FormTokenField
+			className={ 'wc-block-attribute-filter-dropdown-2' }
+			value={ checked }
+			suggestions={ attributeIdSuggestions }
+			onChange={ onChange }
+			placeholder={ sprintf(
+				/* translators: %s attribute name. */
+				__( 'Any %s', 'woo-gutenberg-products-block' ),
+				attributeLabel
+			) }
+			__experimentalShowHowTo={ false }
+			__experimentalExpandOnFocus
+			disabled={ isLoading }
+		/>
+	);
+};
 /**
  * Internal dependencies
  */
@@ -234,6 +262,15 @@ const AttributeFilterBlock = ( {
 		blockAttributes.displayStyle !== 'dropdown' ||
 		blockAttributes.queryType === 'or';
 
+	const onChangeGutenberg = useCallback(
+		( checkedValues ) => {
+			setChecked( checkedValues );
+			if ( ! blockAttributes.showFilterButton ) {
+				onSubmit( checkedValues );
+			}
+		},
+		[ blockAttributes.showFilterButton, onSubmit ]
+	);
 	/**
 	 * When a checkbox in the list changes, update state.
 	 */
@@ -367,6 +404,36 @@ const AttributeFilterBlock = ( {
 
 	return (
 		<>
+			<div
+				className={ `wc-block-attribute-filter style-${ blockAttributes.displayStyle }` }
+			>
+				{ blockAttributes.displayStyle === 'dropdown' ? (
+					<MyFormTokenField
+						attributeLabel={ attributeObject.label }
+						checked={ checked }
+						isLoading={ isLoading }
+						displayedOptions={ displayedOptions }
+						onChange={ onChangeGutenberg }
+					/>
+				) : (
+					<CheckboxList
+						className={ 'wc-block-attribute-filter-list' }
+						options={ displayedOptions }
+						checked={ checked }
+						onChange={ onChange }
+						isLoading={ isLoading }
+						isDisabled={ isDisabled }
+					/>
+				) }
+				{ blockAttributes.showFilterButton && (
+					<FilterSubmitButton
+						className="wc-block-attribute-filter__button"
+						disabled={ isLoading || isDisabled }
+						onClick={ () => onSubmit( checked ) }
+					/>
+				) }
+			</div>
+
 			{ ! isEditor &&
 				blockAttributes.heading &&
 				displayedOptions.length > 0 && (
@@ -374,17 +441,18 @@ const AttributeFilterBlock = ( {
 						{ blockAttributes.heading }
 					</TagName>
 				) }
+
 			<div
 				className={ `wc-block-attribute-filter style-${ blockAttributes.displayStyle }` }
 			>
 				{ blockAttributes.displayStyle === 'dropdown' ? (
 					<DropdownSelector
-						attributeLabel={ attributeObject.label }
-						checked={ checked }
+						attributeLabel={ attributeObject.label } // done
+						checked={ checked } //['gray', 'green', 'red']
 						className={ 'wc-block-attribute-filter-dropdown' }
 						inputLabel={ blockAttributes.heading }
-						isLoading={ isLoading }
-						multiple={ multiple }
+						isLoading={ isLoading } // done
+						multiple={ multiple } // done. nu se adauga
 						onChange={ onChange }
 						options={ displayedOptions }
 					/>

@@ -1,3 +1,8 @@
+// 18px is the minimum input field line-height and 14px is the font-size of
+// the drop down selector elements.
+
+$dropdown-selector-line-height: math.div(18, 14);
+
 .wc-block-attribute-filter {
 	margin-bottom: $gap-large;
 
@@ -21,6 +26,17 @@
 			}
 		}
 	}
+
+		// custom style for FormTokenField
+		.components-form-token-field {
+			flex-grow: 1;
+			max-width: unset;
+			width: 0;
+		}
+		.components-form-token-field__label {
+			@include visually-hidden();
+		}
+
 
 	.wc-block-attribute-filter-dropdown {
 		flex-grow: 1;
