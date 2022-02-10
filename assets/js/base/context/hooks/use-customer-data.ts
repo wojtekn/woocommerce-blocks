@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useState, useCallback, useRef } from '@wordpress/element';
 import { CART_STORE_KEY as storeKey } from '@woocommerce/block-data';
 import { useDebouncedCallback } from 'use-debounce';
@@ -98,6 +98,16 @@ export const useCustomerData = (): {
 		shippingAddress: initialShippingAddress,
 	} );
 
+	const {
+		setBillingData: datastoreSetBillingData,
+		setShippingAddress: datastoreSetShippingAddress,
+	} = useDispatch( storeKey );
+
+	const datastoreCustomerData = useSelect( ( select ) => {
+		const store = select( storeKey );
+		return store.getCustomerData();
+	} );
+
 	// Store values last sent to the server in a ref to avoid requests unless important fields are changed.
 	const previousCustomerData = useRef< CustomerData >( customerData );
 
@@ -132,17 +142,24 @@ export const useCustomerData = (): {
 	 * This callback contains special handling for the "email" address field so that field is never overwritten if
 	 * simply updating the billing address and not the email address.
 	 */
-	const setBillingData = useCallback( ( newData ) => {
-		setCustomerData( ( prevState ) => {
-			return {
-				...prevState,
-				billingData: {
-					...prevState.billingData,
-					...newData,
-				},
-			};
-		} );
-	}, [] );
+	const setBillingData = useCallback(
+		( newData ) => {
+			datastoreSetBillingData( {
+				...datastoreCustomerData.billingData,
+				...newData,
+			} );
+			setCustomerData( ( prevState ) => {
+				return {
+					...prevState,
+					billingData: {
+						...prevState.billingData,
+						...newData,
+					},
+				};
+			} );
+		},
+		[ setCustomerData, datastoreSetBillingData, datastoreCustomerData ]
+	);
 
 	/**
 	 * Set shipping address.
@@ -150,17 +167,24 @@ export const useCustomerData = (): {
 	 * Callback used to set shipping data for the customer. This merges the previous and new state, and in turn, will
 	 * trigger an update to the server if enough data has changed (see the useEffect call below).
 	 */
-	const setShippingAddress = useCallback( ( newData ) => {
-		setCustomerData( ( prevState ) => {
-			return {
-				...prevState,
-				shippingAddress: {
-					...prevState.shippingAddress,
-					...newData,
-				},
-			};
-		} );
-	}, [] );
+	const setShippingAddress = useCallback(
+		( newData ) => {
+			datastoreSetShippingAddress( {
+				...datastoreCustomerData.shippingAddress,
+				...newData,
+			} );
+			setCustomerData( ( prevState ) => {
+				return {
+					...prevState,
+					shippingAddress: {
+						...prevState.shippingAddress,
+						...newData,
+					},
+				};
+			} );
+		},
+		[ setCustomerData, datastoreSetShippingAddress, datastoreCustomerData ]
+	);
 
 	/**
 	 * This pushes changes to the API when the local state differs from the address in the cart.
