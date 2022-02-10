@@ -3,6 +3,8 @@
  */
 import { createContext, useContext, useState } from '@wordpress/element';
 import { defaultAddressFields } from '@woocommerce/settings';
+import { CART_STORE_KEY as storeKey } from '@woocommerce/block-data';
+import { useDispatch } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -96,11 +98,22 @@ export const CustomerDataProvider = ( { children } ) => {
 	} = useCustomerData();
 	const { cartNeedsShipping: needsShipping } = useStoreCart();
 	const { customerId } = useCheckoutContext();
-	const [ shippingAsBilling, setShippingAsBilling ] = useState(
+	const [ contextShippingAsBilling, contextSetShippingAsBilling ] = useState(
 		() =>
 			needsShipping &&
 			( ! customerId || isSameAddress( shippingAddress, billingData ) )
 	);
+
+	const { setShippingAsBilling: datastoreSetShippingAsBilling } = useDispatch(
+		storeKey
+	);
+
+	const setShippingAsBilling = ( value ) => {
+		datastoreSetShippingAsBilling( value );
+		contextSetShippingAsBilling( value );
+	};
+
+	const shippingAsBilling = contextShippingAsBilling;
 
 	/**
 	 * @type {CustomerDataContext}
