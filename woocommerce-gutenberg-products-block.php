@@ -150,6 +150,11 @@ if ( is_readable( $autoloader ) ) {
 	return;
 }
 
+// Ensure we load the Package class from the feature plugin, not the core package.
+if ( ! class_exists( '\Automattic\WooCommerce\Blocks\Package', false ) ) {
+	include __DIR__ . '/src/Package.php';
+}
+
 add_action( 'plugins_loaded', array( '\Automattic\WooCommerce\Blocks\Package', 'init' ) );
 
 /**
