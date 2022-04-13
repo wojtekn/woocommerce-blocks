@@ -18,6 +18,7 @@ use Automattic\WooCommerce\Blocks\Payments\Integrations\CashOnDelivery;
 use Automattic\WooCommerce\Blocks\Payments\Integrations\Cheque;
 use Automattic\WooCommerce\Blocks\Payments\Integrations\PayPal;
 use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
+use Automattic\WooCommerce\Blocks\Payments\PaymentMethodsIcons;
 use Automattic\WooCommerce\Blocks\Registry\Container;
 use Automattic\WooCommerce\StoreApi\StoreApi;
 use Automattic\WooCommerce\StoreApi\RoutesController;
@@ -95,6 +96,7 @@ class Bootstrap {
 		$this->container->get( GoogleAnalytics::class );
 		$this->container->get( BlockTypesController::class );
 		$this->container->get( BlockTemplatesController::class );
+		$this->container->get( PaymentMethodsIcons::class );
 		if ( $this->package->feature()->is_feature_plugin_build() ) {
 			$this->container->get( PaymentsApi::class );
 		}
@@ -235,21 +237,34 @@ class Bootstrap {
 		);
 		$this->container->register(
 			GoogleAnalytics::class,
-			function( Container $container ) {
+			function ( Container $container ) {
 				// Require Google Analytics Integration to be activated.
 				if ( ! class_exists( 'WC_Google_Analytics_Integration', false ) ) {
 					return;
 				}
 				$asset_api = $container->get( AssetApi::class );
+
 				return new GoogleAnalytics( $asset_api );
 			}
 		);
+
+		$this->container->register(
+			PaymentMethodsIcons::class,
+			function ( Container $container ) {
+				$payment_method_registry = $container->get( PaymentMethodRegistry::class );
+				$asset_data_registry     = $container->get( AssetDataRegistry::class );
+
+				return new PaymentMethodsIcons( $payment_method_registry, $asset_data_registry );
+			}
+		);
+
 		if ( $this->package->feature()->is_feature_plugin_build() ) {
 			$this->container->register(
 				PaymentsApi::class,
 				function ( Container $container ) {
 					$payment_method_registry = $container->get( PaymentMethodRegistry::class );
 					$asset_data_registry     = $container->get( AssetDataRegistry::class );
+
 					return new PaymentsApi( $payment_method_registry, $asset_data_registry );
 				}
 			);
