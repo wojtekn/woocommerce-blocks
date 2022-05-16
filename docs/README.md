@@ -7,7 +7,6 @@ The WooCommerce Blocks Handbook provides documentation for designers and develop
 | Document                                            | Description                                                                                                                                       |
 | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Contributing](contributors/contributing/README.md) | These documents explain how you can contribute to the development of the blocks plugin, development best practices, and how to help with testing. |
-| <img width='250'/>                                  |                                                                                                                                                   |
 
 ## Internal developers
 
@@ -18,21 +17,18 @@ The WooCommerce Blocks Handbook provides documentation for designers and develop
 | [Store API (REST API)](../src/StoreApi/README.md)                    | These documents explain the Store API used to get product data on the frontend.                      |
 | [Templates](internal-developers/templates/README.md)                 | These documents explain the technical aspects of the WooCommerce Block templates and template parts. |
 | [Testing](internal-developers/testing/README.md)                     | These documents explain the manual testing process.                                                  |
-| <img width='250'/>                                                   |                                                                                                      |
 
 ## Third-party developers
 
 | Document                                 | Description                                                      |
 | ---------------------------------------- | ---------------------------------------------------------------- |
 | [Extensibility](extensibility/README.md) | These documents explain the extensibility of WooCommerce Blocks. |
-| <img width='250'/>                       |                                                                  |
 
 ## Designers
 
 | Document                               | Description                                                                                              |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | [Theming](designers/theming/README.md) | These documents explain the theming for blocks, styles, CSS classnames and other theming best practices. |
-| <img width='250'/>                     |                                                                                                          |
 
 ## <!-- FEEDBACK -->
 
