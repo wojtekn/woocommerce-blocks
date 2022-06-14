@@ -43,6 +43,7 @@ class Installer {
 		}
 
 		$use_blockified_templates = wc_current_theme_is_fse_theme();
+		var_dump( 'MAYBECREATETABLES', 'SCHEMA = ' . $db_schema_version, 'THEME = ' . wp_get_theme() );
 		if ( $db_schema_version && $db_schema_version <= 260 ) {
 			$use_blockified_templates = false;
 		}
