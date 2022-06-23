@@ -1,10 +1,22 @@
-const Block = (): JSX.Element => {
-	const divStyle = {
-		border: '1px solid',
-		padding: '5px 10px',
-		textAlign: 'center',
-	};
-	return <div style={ divStyle }>CROSS SELLS PRODUCTS</div>;
+/**
+ * External dependencies
+ */
+import { useStoreCart } from '@woocommerce/base-context/hooks';
+
+/**
+ * Internal dependencies
+ */
+import CartCrossSellsProductList from '../../cart-cross-sells-product-list';
+
+const Block = ( { className }: { className: string } ): JSX.Element => {
+	const { crossSellsItems, cartIsLoading } = useStoreCart();
+	return (
+		<CartCrossSellsProductList
+			className={ className }
+			crossSellsItems={ crossSellsItems }
+			isLoading={ cartIsLoading }
+		/>
+	);
 };
 
 export default Block;
