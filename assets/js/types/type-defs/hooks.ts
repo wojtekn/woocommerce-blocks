@@ -34,6 +34,7 @@ export interface StoreCartCoupon {
 export interface StoreCart {
 	cartCoupons: CartResponseCoupons;
 	cartItems: Array< CartResponseItem >;
+	crossSellsItems: Array< CartResponseItem >;
 	cartFees: Array< CartResponseFeeItem >;
 	cartItemsCount: number;
 	cartItemsWeight: number;
