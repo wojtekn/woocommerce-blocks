@@ -9,11 +9,11 @@ import { useStoreCart } from '@woocommerce/base-context/hooks';
 import CartCrossSellsProductList from '../../cart-cross-sells-product-list';
 
 const Block = ( { className }: { className: string } ): JSX.Element => {
-	const { crossSellsItems, cartIsLoading } = useStoreCart();
+	const { crossSellsProducts, cartIsLoading } = useStoreCart();
 	return (
 		<CartCrossSellsProductList
+			crossSellsProducts={ crossSellsProducts }
 			className={ className }
-			crossSellsItems={ crossSellsItems }
 			isLoading={ cartIsLoading }
 		/>
 	);

@@ -1,34 +1,35 @@
 /**
  * External dependencies
  */
-import { CartResponseItem } from '@woocommerce/type-defs/cart-response';
+import { ProductResponseItem } from '@woocommerce/type-defs/product-response';
 
 /**
  * Internal dependencies
  */
-import CartCrossSellsItem from './cart-cross-sells-item';
+import CartCrossSellsProduct from './cart-cross-sells-product';
 
 const placeholderRows = [ ...Array( 3 ) ].map( ( _x, i ) => (
-	<CartCrossSellsItem crossSellsItem={ {} } key={ i } />
+	<CartCrossSellsProduct crossSellsProduct={ {} } key={ i } />
 ) );
 
 interface CrossSellsProducListProps {
-	crossSellsItems: CartResponseItem[];
+	crossSellsProducts: ProductResponseItem[];
 	isLoading: boolean;
 	className?: string;
 }
 
 const CartCrossSellsProductList = ( {
-	crossSellsItems = [],
+	crossSellsProducts,
 	isLoading = false,
 }: CrossSellsProducListProps ): JSX.Element => {
 	const products = isLoading
 		? placeholderRows
-		: crossSellsItems.map( ( crossSellsItem ) => {
+		: crossSellsProducts.map( ( crossSellsProduct ) => {
 				return (
-					<CartCrossSellsItem
-						key={ crossSellsItem.key }
-						crossSellsItem={ crossSellsItem }
+					<CartCrossSellsProduct
+						crossSellsProduct={ crossSellsProduct }
+						isLoading={ isLoading }
+						key={ crossSellsProduct.id }
 					/>
 				);
 		  } );
