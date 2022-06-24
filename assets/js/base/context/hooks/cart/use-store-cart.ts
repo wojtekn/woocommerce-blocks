@@ -150,7 +150,7 @@ export const useStoreCart = (
 				return {
 					cartCoupons: previewCart.coupons,
 					cartItems: previewCart.items,
-					crossSellsItems: previewCart.cross_sells,
+					crossSellsProducts: previewCart.cross_sells,
 					cartFees: previewCart.fees,
 					cartItemsCount: previewCart.items_count,
 					cartItemsWeight: previewCart.items_weight,
@@ -212,7 +212,7 @@ export const useStoreCart = (
 			return {
 				cartCoupons,
 				cartItems: cartData.items,
-				crossSellsItems: cartData.cross_sells,
+				crossSellsProducts: cartData.cross_sells,
 				cartFees,
 				cartItemsCount: cartData.itemsCount,
 				cartItemsWeight: cartData.itemsWeight,

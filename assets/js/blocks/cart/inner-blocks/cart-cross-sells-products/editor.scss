@@ -1,36 +1,41 @@
 .wp-block-woocommerce-cart-cross-sells-products-block {
-  display: flex;
-  flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
 
-  div {
-    flex: 0 0 30%;
-    list-style: none;
-    padding-right: 5%;
-    text-align: center;
+	>div {
+		flex: 0 0 30%;
+		list-style: none;
+		padding-right: 5%;
+		text-align: center;
 
-    &:nth-child(3n + 3) {
-      padding-right: 0%;
-    }
+		&:nth-child(3n + 3) {
+			padding-right: 0%;
+		}
 
-    a {
-      display: block;
-      color: unset;
+		a {
+			display: block;
+			color: unset;
 
-      .wc-block-components-product-name {
-        font-weight: 600;
-      }
-    }
+			.wc-block-components-product-name {
+				font-weight: 400;
+			}
 
-    .wc-block-components-product-add-to-cart-button:not(.is-link) {
-      background-color: #eeeeee;
-      color: #333333;
-      margin-top: 1em;
+			.wc-block-components-product-price {
+				display: block;
+			}
+		}
 
-      &:focus, &:hover {
-        background-color: #d5d5d5;
-        border-color: #d5d5d5;
-        color: #333333;
-      }
-    }
-  }
+		.wc-block-components-product-add-to-cart-button:not(.is-link) {
+			background-color: #eee;
+			color: #333;
+			margin-top: 1em;
+
+			&:focus,
+			&:hover {
+				background-color: #d5d5d5;
+				border-color: #d5d5d5;
+				color: #333;
+			}
+		}
+	}
 }
