@@ -83,8 +83,7 @@ export const CheckoutStateProvider = ( {
 	const isCalculating = checkoutState.calculatingCount > 0;
 	const { isSuccessResponse, isErrorResponse, isFailResponse, shouldRetry } =
 		useEmitResponse();
-	const { checkoutNotices, paymentNotices, expressPaymentNotices } =
-		useCheckoutNotices();
+	const { hasCheckoutErrors } = useCheckoutNotices();
 
 	const [ observers, observerDispatch ] = useReducer( emitReducer, {} );
 	const currentObservers = useRef( observers );
@@ -246,20 +245,7 @@ export const CheckoutStateProvider = ( {
 							dispatch( actions.setIdle() );
 						}
 					} else {
-						const hasErrorNotices =
-							checkoutNotices.some(
-								( notice: { status: string } ) =>
-									notice.status === 'error'
-							) ||
-							expressPaymentNotices.some(
-								( notice: { status: string } ) =>
-									notice.status === 'error'
-							) ||
-							paymentNotices.some(
-								( notice: { status: string } ) =>
-									notice.status === 'error'
-							);
-						if ( ! hasErrorNotices ) {
+						if ( ! hasCheckoutErrors ) {
 							// no error handling in place by anything so let's fall
 							// back to default
 							const message =
@@ -354,9 +340,7 @@ export const CheckoutStateProvider = ( {
 		isFailResponse,
 		isSuccessResponse,
 		shouldRetry,
-		checkoutNotices,
-		expressPaymentNotices,
-		paymentNotices,
+		hasCheckoutErrors,
 	] );
 
 	const onSubmit = useCallback( () => {

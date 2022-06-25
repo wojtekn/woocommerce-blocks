@@ -170,7 +170,10 @@ abstract class AbstractAddressSchema extends AbstractSchema {
 		if ( empty( $address['country'] ) ) {
 			$errors->add(
 				'missing_country',
-				__( 'Country is required', 'woo-gutenberg-products-block' )
+				__( 'Country is required', 'woo-gutenberg-products-block' ),
+				[
+					'context' => $param,
+				]
 			);
 			return $errors;
 		}
@@ -182,7 +185,10 @@ abstract class AbstractAddressSchema extends AbstractSchema {
 					/* translators: %s valid country codes */
 					__( 'Invalid country code provided. Must be one of: %s', 'woo-gutenberg-products-block' ),
 					implode( ', ', array_keys( wc()->countries->get_countries() ) )
-				)
+				),
+				[
+					'context' => $param,
+				]
 			);
 			return $errors;
 		}
@@ -195,21 +201,30 @@ abstract class AbstractAddressSchema extends AbstractSchema {
 					__( 'The provided state (%1$s) is not valid. Must be one of: %2$s', 'woo-gutenberg-products-block' ),
 					esc_html( $address['state'] ),
 					implode( ', ', array_keys( $this->get_states_for_country( $address['country'] ) ) )
-				)
+				),
+				[
+					'context' => $param,
+				]
 			);
 		}
 
 		if ( ! empty( $address['postcode'] ) && ! \WC_Validation::is_postcode( $address['postcode'], $address['country'] ) ) {
 			$errors->add(
 				'invalid_postcode',
-				__( 'The provided postcode / ZIP is not valid', 'woo-gutenberg-products-block' )
+				__( 'The provided postcode / ZIP is not valid', 'woo-gutenberg-products-block' ),
+				[
+					'context' => $param,
+				]
 			);
 		}
 
 		if ( ! empty( $address['phone'] ) && ! \WC_Validation::is_phone( $address['phone'] ) ) {
 			$errors->add(
 				'invalid_phone',
-				__( 'The provided phone number is not valid', 'woo-gutenberg-products-block' )
+				__( 'The provided phone number is not valid', 'woo-gutenberg-products-block' ),
+				[
+					'context' => $param,
+				]
 			);
 		}
 

@@ -73,7 +73,10 @@ class BillingAddressSchema extends AbstractAddressSchema {
 		if ( ! empty( $address['email'] ) && ! is_email( $address['email'] ) ) {
 			$errors->add(
 				'invalid_email',
-				__( 'The provided email address is not valid', 'woo-gutenberg-products-block' )
+				__( 'The provided email address is not valid', 'woo-gutenberg-products-block' ),
+				[
+					'context' => $param,
+				]
 			);
 		}
 

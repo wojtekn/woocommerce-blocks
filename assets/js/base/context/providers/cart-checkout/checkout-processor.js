@@ -10,10 +10,7 @@ import {
 	useState,
 	useMemo,
 } from '@wordpress/element';
-import {
-	emptyHiddenAddressFields,
-	formatStoreApiErrorMessage,
-} from '@woocommerce/base-utils';
+import { emptyHiddenAddressFields } from '@woocommerce/base-utils';
 import { useDispatch } from '@wordpress/data';
 
 /**
@@ -27,6 +24,8 @@ import { usePaymentMethodDataContext } from './payment-methods';
 import { useValidationContext } from '../validation';
 import { useStoreCart } from '../../hooks/cart/use-store-cart';
 import { useStoreNoticesContext } from '../store-notices';
+import { useErrorDispatcher } from '../../hooks/use-error-dispatcher';
+
 /**
  * CheckoutProcessor component.
  *
@@ -61,6 +60,7 @@ const CheckoutProcessor = () => {
 	const { setIsSuppressed } = useStoreNoticesContext();
 	const { createErrorNotice, removeNotice } = useDispatch( 'core/notices' );
 	const currentBillingAddress = useRef( billingAddress );
+	const { dispatchErrors } = useErrorDispatcher( 'wc/checkout' );
 	const currentShippingAddress = useRef( shippingAddress );
 	const currentRedirectUrl = useRef( redirectUrl );
 	const [ isProcessingOrder, setIsProcessingOrder ] = useState( false );
@@ -233,18 +233,7 @@ const CheckoutProcessor = () => {
 						if ( response.data?.cart ) {
 							receiveCart( response.data.cart );
 						}
-						createErrorNotice(
-							formatStoreApiErrorMessage( response ),
-							{ id: 'checkout', context: 'wc/checkout' }
-						);
-						response?.additional_errors?.forEach?.(
-							( additionalError ) => {
-								createErrorNotice( additionalError.message, {
-									id: additionalError.error_code,
-									context: 'wc/checkout',
-								} );
-							}
-						);
+						dispatchErrors( response );
 						dispatchActions.setAfterProcessing( response );
 					} );
 				} catch {
@@ -280,8 +269,9 @@ const CheckoutProcessor = () => {
 		extensionData,
 		cartNeedsShipping,
 		dispatchActions,
-		createErrorNotice,
+		dispatchErrors,
 		receiveCart,
+		createErrorNotice,
 	] );
 
 	// process order if conditions are good.

@@ -9,6 +9,7 @@ import {
 	useStoreEvents,
 	useEditorContext,
 } from '@woocommerce/base-context';
+import { StoreNoticesContainer } from '@woocommerce/base-context/providers';
 import { CheckboxControl } from '@woocommerce/blocks-checkout';
 import Noninteractive from '@woocommerce/base-components/noninteractive';
 import type {
@@ -75,6 +76,7 @@ const Block = ( {
 
 	return (
 		<>
+			<StoreNoticesContainer context="wc/shipping-address" />
 			<AddressFormWrapperComponent>
 				<AddressForm
 					id="shipping"
