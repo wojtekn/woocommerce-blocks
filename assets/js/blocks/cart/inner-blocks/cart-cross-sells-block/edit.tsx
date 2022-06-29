@@ -1,18 +1,14 @@
 /**
  * External dependencies
  */
-import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import type { TemplateArray } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 
-/**
- * Internal dependencies
- */
 export const Edit = (): JSX.Element => {
 	const blockProps = useBlockProps( {
 		className: 'wc-block-cart__cross-sells',
 	} );
-
 	const defaultTemplate = [
 		[
 			'core/heading',

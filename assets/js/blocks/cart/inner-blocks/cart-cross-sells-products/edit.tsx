@@ -1,7 +1,10 @@
 /**
  * External dependencies
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
+import { PanelBody, RangeControl } from '@wordpress/components';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { getSetting } from '@woocommerce/settings';
 
 /**
  * Internal dependencies
@@ -9,17 +12,41 @@ import { useBlockProps } from '@wordpress/block-editor';
 import Block from './block';
 import './editor.scss';
 
-export const Edit = ( {
-	attributes,
-}: {
-	attributes: { className: string };
-} ): JSX.Element => {
-	const { className } = attributes;
+interface Attributes {
+	className?: string;
+	columns: number;
+}
+
+interface Props {
+	attributes: Attributes;
+	setAttributes: ( attributes: Record< string, unknown > ) => void;
+}
+
+export const Edit = ( { attributes, setAttributes }: Props ): JSX.Element => {
+	const { className, columns } = attributes;
 	const blockProps = useBlockProps();
 
 	return (
 		<div { ...blockProps }>
-			<Block className={ className } />
+			<InspectorControls>
+				<PanelBody
+					title={ __( 'Settings', 'woo-gutenberg-products-block' ) }
+				>
+					<RangeControl
+						label={ __(
+							'Cross-Sells products to show',
+							'woo-gutenberg-products-block'
+						) }
+						value={ columns }
+						onChange={ ( value ) =>
+							setAttributes( { columns: value } )
+						}
+						min={ getSetting( 'min_columns', 1 ) }
+						max={ getSetting( 'max_columns', 6 ) }
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<Block columns={ columns } className={ className } />
 		</div>
 	);
 };

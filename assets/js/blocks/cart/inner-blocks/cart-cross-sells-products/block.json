@@ -11,6 +11,12 @@
 		"reusable": false,
 		"inserter": false
 	},
+	"attributes": {
+		"columns": {
+			"type": "number",
+			"default": 3
+		}
+	},
 	"parent": [ "woocommerce/cart-cross-sells-block" ],
 	"textdomain": "woo-gutenberg-products-block",
 	"apiVersion": 2
