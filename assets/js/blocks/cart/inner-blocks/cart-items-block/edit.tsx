@@ -4,6 +4,7 @@
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import { Main } from '@woocommerce/base-components/sidebar-layout';
 import { innerBlockAreas } from '@woocommerce/blocks-checkout';
+import { isExperimentalBuild } from '@woocommerce/block-settings';
 import type { TemplateArray } from '@wordpress/blocks';
 /**
  * Internal dependencies
@@ -22,7 +23,9 @@ export const Edit = ( { clientId }: Props ): JSX.Element => {
 	const allowedBlocks = getAllowedBlocks( innerBlockAreas.CART_ITEMS );
 	const defaultTemplate = [
 		[ 'woocommerce/cart-line-items-block', {}, [] ],
-		[ 'woocommerce/cart-cross-sells-block', {}, [] ],
+		...( isExperimentalBuild()
+			? [ 'woocommerce/cart-cross-sells-block', {}, [] ]
+			: [] ),
 	] as TemplateArray;
 
 	useForcedLayout( {
