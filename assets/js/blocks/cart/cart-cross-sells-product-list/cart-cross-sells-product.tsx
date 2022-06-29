@@ -18,7 +18,7 @@ import { Block as ProductSaleBadge } from '../../../atomic/blocks/product-elemen
 import { Block as ProductPrice } from '../../../atomic/blocks/product-elements/price/block';
 import { AddToCartButton } from '../../../atomic/blocks/product-elements/add-to-cart/shared';
 
-interface CrossSellsProducProps {
+interface CrossSellsProductProps {
 	crossSellsProduct: ProductResponseItem;
 	isLoading: boolean;
 }
@@ -26,12 +26,12 @@ interface CrossSellsProducProps {
 const CartCrossSellsProduct = ( {
 	crossSellsProduct,
 	isLoading,
-}: CrossSellsProducProps ): JSX.Element => {
+}: CrossSellsProductProps ): JSX.Element => {
 	const { product } = useProductDataContext();
 	const { permalink } = product;
 
 	return (
-		<div>
+		<div className="cross-sells-product">
 			<InnerBlockLayoutContextProvider
 				parentName={ 'woocommerce/cart-cross-sells-block' }
 				parentClassName={ 'wp-block-cart-cross-sells-product' }
@@ -44,7 +44,7 @@ const CartCrossSellsProduct = ( {
 						<ProductImage />
 						<ProductName />
 						<ProductRating />
-						<ProductSaleBadge product={ product } />
+						<ProductSaleBadge />
 						<ProductPrice />
 					</a>
 					<AddToCartButton />

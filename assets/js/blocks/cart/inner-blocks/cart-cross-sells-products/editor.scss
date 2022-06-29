@@ -1,12 +1,12 @@
 .wp-block-woocommerce-cart-cross-sells-products-block {
-	display: flex;
-	flex-wrap: wrap;
 
-	>div {
-		flex: 0 0 30%;
-		list-style: none;
+	.cross-sells-product {
+		display: inline-block;
+		margin-bottom: 2em;
 		padding-right: 5%;
 		text-align: center;
+		vertical-align: top;
+		width: 30%;
 
 		&:nth-child(3n + 3) {
 			padding-right: 0%;
