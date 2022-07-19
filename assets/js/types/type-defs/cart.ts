@@ -190,6 +190,7 @@ export interface Cart {
 	items: Array< CartItem >;
 	itemsCount: number;
 	itemsWeight: number;
+	crossSells: Array< ProductResponseItem >;
 	needsPayment: boolean;
 	needsShipping: boolean;
 	hasCalculatedShipping: boolean;
