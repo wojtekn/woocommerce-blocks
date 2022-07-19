@@ -34,6 +34,7 @@ import type { TemplateArray } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
+import '../cart-checkout-shared/features/tracking';
 import './inner-blocks';
 import './styles/editor.scss';
 import {
