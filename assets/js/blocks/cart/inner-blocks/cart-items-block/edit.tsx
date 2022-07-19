@@ -24,9 +24,9 @@ export const Edit = ( { clientId }: Props ): JSX.Element => {
 	const defaultTemplate = [
 		[ 'woocommerce/cart-line-items-block', {}, [] ],
 		...( isExperimentalBuild()
-			? [ 'woocommerce/cart-cross-sells-block', {}, [] ]
+			? [ [ 'woocommerce/cart-cross-sells-block', {}, [] ] ]
 			: [] ),
-	] as TemplateArray;
+	] as unknown as TemplateArray;
 
 	useForcedLayout( {
 		clientId,
