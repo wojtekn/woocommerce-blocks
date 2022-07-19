@@ -14,7 +14,7 @@ import {
 
 import {
 	ProductResponseItemData,
-	ProductResponseItem
+	ProductResponseItem,
 } from './product-response';
 
 export interface CurrencyInfo {
