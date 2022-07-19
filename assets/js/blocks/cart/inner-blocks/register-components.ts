@@ -73,6 +73,7 @@ if ( isExperimentalBuild() ) {
 		),
 	} );
 }
+
 registerCheckoutBlock( {
 	metadata: metadata.CART_TOTALS,
 	component: lazy(
