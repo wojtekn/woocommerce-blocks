@@ -3,6 +3,7 @@
  */
 import { CurrencyResponse } from './currency';
 import type { CartItem } from './cart';
+import type { ProductResponseItem } from './product-response';
 
 export interface CartResponseTotalsItem extends CurrencyResponse {
 	total_discount: string;

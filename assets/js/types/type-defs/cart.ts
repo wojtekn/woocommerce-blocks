@@ -12,7 +12,10 @@ import {
 	ExtensionsData,
 } from './cart-response';
 
-import { ProductResponseItemData } from './product-response';
+import {
+	ProductResponseItemData,
+	ProductResponseItem
+} from './product-response';
 
 export interface CurrencyInfo {
 	currency_code: CurrencyCode;
