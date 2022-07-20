@@ -72,6 +72,17 @@ if ( isExperimentalBuild() ) {
 				)
 		),
 	} );
+
+	registerCheckoutBlock( {
+		metadata: metadata.CART_CROSS_SELLS_PRODUCTS,
+		component: lazy(
+			() =>
+				import(
+					/* webpackChunkName: "cart-blocks/cart-cross-sells-products" */
+					'./cart-cross-sells-products/frontend'
+				)
+		),
+	} );
 }
 
 registerCheckoutBlock( {

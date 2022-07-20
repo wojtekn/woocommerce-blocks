@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { ProductResponseItem } from '@woocommerce/type-defs/product-response';
-import Noninteractive from '@woocommerce/base-components/noninteractive';
 
 /**
  * Internal dependencies
@@ -13,7 +12,7 @@ const placeholderRows = [ ...Array( 3 ) ].map( ( _x, i ) => (
 	<CartCrossSellsProduct crossSellsProduct={ {} } key={ i } />
 ) );
 
-interface CrossSellsProducListProps {
+interface CrossSellsProductListProps {
 	crossSellsProducts: ProductResponseItem[];
 	isLoading: boolean;
 	className?: string;
@@ -24,7 +23,7 @@ const CartCrossSellsProductList = ( {
 	crossSellsProducts,
 	isLoading = false,
 	columns,
-}: CrossSellsProducListProps ): JSX.Element => {
+}: CrossSellsProductListProps ): JSX.Element => {
 	const products = isLoading
 		? placeholderRows
 		: crossSellsProducts.map( ( crossSellsProduct, i ) => {
@@ -39,7 +38,7 @@ const CartCrossSellsProductList = ( {
 				);
 		  } );
 
-	return <Noninteractive>{ products }</Noninteractive>;
+	return <div>{ products }</div>;
 };
 
 export default CartCrossSellsProductList;

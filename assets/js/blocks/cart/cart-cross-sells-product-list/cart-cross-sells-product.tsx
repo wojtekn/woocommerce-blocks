@@ -4,7 +4,6 @@
 import {
 	InnerBlockLayoutContextProvider,
 	ProductDataContextProvider,
-	useProductDataContext,
 } from '@woocommerce/shared-context';
 import { ProductResponseItem } from '@woocommerce/type-defs/product-response';
 
@@ -27,9 +26,6 @@ const CartCrossSellsProduct = ( {
 	crossSellsProduct,
 	isLoading,
 }: CrossSellsProductProps ): JSX.Element => {
-	const { product } = useProductDataContext();
-	const { permalink } = product;
-
 	return (
 		<div className="cross-sells-product">
 			<InnerBlockLayoutContextProvider
@@ -40,13 +36,13 @@ const CartCrossSellsProduct = ( {
 					product={ crossSellsProduct }
 					isLoading={ isLoading }
 				>
-					<a href={ permalink }>
+					<div>
 						<ProductImage />
 						<ProductName />
 						<ProductRating />
 						<ProductSaleBadge />
 						<ProductPrice />
-					</a>
+					</div>
 					<AddToCartButton />
 				</ProductDataContextProvider>
 			</InnerBlockLayoutContextProvider>
