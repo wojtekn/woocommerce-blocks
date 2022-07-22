@@ -3087,6 +3087,12 @@
 <error line="19" column="2" severity="error" message="Module &apos;&quot;@wordpress/components&quot;&apos; has no exported member &apos;__experimentalToggleGroupControl&apos;." source="TS2305" />
 <error line="21" column="2" severity="error" message="Module &apos;&quot;@wordpress/components&quot;&apos; has no exported member &apos;__experimentalToggleGroupControlOption&apos;." source="TS2305" />
 </file>
+<file name="assets/js/blocks/price-filter/frontend.ts">
+<error line="14" column="2" severity="error" message="Type &apos;{ attributes: { showInputFields: boolean; showFilterButton: boolean; heading: string; headingLevel: number; }; isEditor: boolean; }&apos; is not assignable to type &apos;void&apos;." source="TS2322" />
+<error line="30" column="2" severity="error" message="Type &apos;(el: HTMLElement) =&gt; void&apos; is not assignable to type &apos;GetPropsFn&lt;{ attributes: Attributes; isEditor: boolean; }, Record&lt;string, unknown&gt;&gt;&apos;.
+  Type &apos;void&apos; is not assignable to type &apos;BlockProps&lt;{ attributes: Attributes; isEditor: boolean; }, Record&lt;string, unknown&gt;&gt;&apos;.
+    Type &apos;void&apos; is not assignable to type &apos;{ attributes: Attributes; isEditor: boolean; }&apos;." source="TS2322" />
+</file>
 <file name="assets/js/blocks/price-filter/index.tsx">
 <error line="18" column="20" severity="error" message="No overload matches this call.
   Overload 1 of 2, &apos;(metadata: BlockConfiguration&lt;Attributes&gt;, settings?: Partial&lt;BlockConfiguration&lt;Attributes&gt;&gt; | undefined): Block&lt;...&gt; | undefined&apos;, gave the following error.
@@ -3692,24 +3698,28 @@
     Type &apos;{ id: number; name: string; parent: number; }&apos; is missing the following properties from type &apos;SearchListItemType&apos;: value, count, children, breadcrumbs" source="TS2345" />
 </file>
 <file name="assets/js/editor-components/search-list-control/test/index.js">
-<error line="35" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;.
+<error line="40" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;.
   Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemType[]&apos;.
     Type &apos;{ id: number; name: string; }&apos; is missing the following properties from type &apos;SearchListItemType&apos;: value, parent, count, children, breadcrumbs" source="TS2322" />
-<error line="48" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
-<error line="60" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
-<error line="61" column="18" severity="error" message="Type &apos;{ id: number; name: string; }&apos; is not assignable to type &apos;SearchListItemType&apos;." source="TS2322" />
-<error line="72" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
-<error line="73" column="18" severity="error" message="Type &apos;{ id: number; name: string; }&apos; is not assignable to type &apos;SearchListItemType&apos;." source="TS2322" />
-<error line="73" column="29" severity="error" message="Type &apos;{ id: number; name: string; }&apos; is not assignable to type &apos;SearchListItemType&apos;." source="TS2322" />
-<error line="83" column="5" severity="error" message="Type &apos;{ instanceId: number; list: []; selected: []; onChange: (...args: any[]) =&gt; void; }&apos; is not assignable to type &apos;IntrinsicAttributes &amp; SearchListControlProps&apos;.
+<error line="53" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
+<error line="65" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
+<error line="66" column="18" severity="error" message="Type &apos;{ id: number; name: string; }&apos; is not assignable to type &apos;SearchListItemType&apos;." source="TS2322" />
+<error line="77" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
+<error line="78" column="18" severity="error" message="Type &apos;{ id: number; name: string; }&apos; is not assignable to type &apos;SearchListItemType&apos;." source="TS2322" />
+<error line="78" column="29" severity="error" message="Type &apos;{ id: number; name: string; }&apos; is not assignable to type &apos;SearchListItemType&apos;." source="TS2322" />
+<error line="88" column="5" severity="error" message="Type &apos;{ instanceId: number; list: []; selected: []; onChange: (...args: any[]) =&gt; void; }&apos; is not assignable to type &apos;IntrinsicAttributes &amp; SearchListControlProps&apos;.
   Property &apos;instanceId&apos; does not exist on type &apos;IntrinsicAttributes &amp; SearchListControlProps&apos;." source="TS2322" />
-<error line="96" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
-<error line="110" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
-<error line="124" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
-<error line="139" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
-<error line="149" column="26" severity="error" message="Binding element &apos;item&apos; implicitly has an &apos;any&apos; type." source="TS7031" />
-<error line="155" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
-<error line="168" column="5" severity="error" message="Type &apos;{ id: number; name: string; parent: number; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;.
+<error line="101" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
+<error line="115" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
+<error line="123" column="4" severity="error" message="Argument of type &apos;Element | null&apos; is not assignable to parameter of type &apos;Document | Node | Element | Window&apos;.
+  Type &apos;null&apos; is not assignable to type &apos;Document | Node | Element | Window&apos;." source="TS2345" />
+<error line="143" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
+<error line="151" column="4" severity="error" message="Argument of type &apos;Element | null&apos; is not assignable to parameter of type &apos;Document | Node | Element | Window&apos;." source="TS2345" />
+<error line="166" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
+<error line="181" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
+<error line="191" column="26" severity="error" message="Binding element &apos;item&apos; implicitly has an &apos;any&apos; type." source="TS7031" />
+<error line="197" column="5" severity="error" message="Type &apos;{ id: number; name: string; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;." source="TS2322" />
+<error line="210" column="5" severity="error" message="Type &apos;{ id: number; name: string; parent: number; }[]&apos; is not assignable to type &apos;SearchListItemsType&apos;.
   Type &apos;{ id: number; name: string; parent: number; }[]&apos; is not assignable to type &apos;SearchListItemType[]&apos;.
     Type &apos;{ id: number; name: string; parent: number; }&apos; is missing the following properties from type &apos;SearchListItemType&apos;: value, count, children, breadcrumbs" source="TS2322" />
 </file>
