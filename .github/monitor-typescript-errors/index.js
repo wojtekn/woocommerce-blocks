@@ -47,6 +47,8 @@ const runner = async () => {
 		filesWithNewErrors
 	);
 
+	console.log( body );
+
 	const numberOfFilesWithErrors = Object.keys( filesWithNewErrors ).length;
 
 	const message =
@@ -55,8 +57,9 @@ const runner = async () => {
 		( numberOfFilesWithErrors > 0
 			? `⚠️ ⚠️ This PR introduces new TS errors on ${ numberOfFilesWithErrors } files: \n` +
 			  '<details> \n' +
+			  '``` \n' +
 			  body +
-			  '\n' +
+			  '``` \n' +
 			  '</details>'
 			: '🎉 🎉 This PR does not introduce new TS errors.' );
 

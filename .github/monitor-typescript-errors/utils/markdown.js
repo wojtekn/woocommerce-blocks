@@ -19,7 +19,7 @@ const generateBody = ( filesWithNewError ) => {
 		.map( ( file ) => {
 			return `
 	File: ${ file }
-		${ filesWithNewError[ file ].map( ( error ) => `- ${ error }` ).join( '\r\n' ) }
+${ filesWithNewError[ file ].map( ( error ) => `- ${ error }` ).join( '\r\n' ) }
 		`;
 		} )
 		.join( '\r\n' );
