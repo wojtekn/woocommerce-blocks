@@ -1,6 +1,6 @@
-exports.generateMarkdownMessage = ( dataFromParsedXml ) => {
+exports.generateMarkdownMessage = ( dataFromParsedXml, filesWithNewError ) => {
 	const header = generateHeader( dataFromParsedXml );
-	const body = generateBody( dataFromParsedXml );
+	const body = generateBody( filesWithNewError );
 
 	return { header, body };
 };
@@ -14,14 +14,13 @@ Total errors: ${ dataFromParsedXml.totalErrors }
 `;
 };
 
-const generateBody = ( dataFromParsedXml ) => {
-	const files = dataFromParsedXml.files;
-
-	return Object.keys( files ).map( ( file ) => {
-		return `
-Files with errors:
+const generateBody = ( filesWithNewError ) => {
+	return Object.keys( filesWithNewError )
+		.map( ( file ) => {
+			return `
 	File: ${ file }
-		${ files[ file ].map( ( error ) => `- ${ error }` ).join( '\r\n' ) }
+		${ filesWithNewError[ file ].map( ( error ) => `- ${ error }` ).join( '\r\n' ) }
 		`;
-	} );
+		} )
+		.join( '\r\n' );
 };

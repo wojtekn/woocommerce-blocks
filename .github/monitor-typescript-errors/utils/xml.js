@@ -1,4 +1,5 @@
 const { XMLParser } = require( 'fast-xml-parser' );
+const { isSame, getDifferenceElements } = require( './array' );
 
 exports.parseXml = ( filePath ) => {
 	const parser = new XMLParser( {
@@ -46,6 +47,29 @@ const getDataFromParsedXml = ( parsedXml ) => {
 	);
 };
 
+const removeLineNumber = ( error ) => error.replace( /[0-9]/g, '' );
+
+const isIntroduceNewErrors = (
+	fileErrorsFromNewCheckStyle,
+	fileErrorsFromCurrentCheckStyle
+) => {
+	const fileErrorsFromNewCheckStyleWithoutLineNumber =
+		fileErrorsFromNewCheckStyle.map( removeLineNumber );
+	const fileErrorsFromCurrentCheckStyleWithoutLineNumber =
+		fileErrorsFromCurrentCheckStyle.map( removeLineNumber );
+
+	return (
+		fileErrorsFromNewCheckStyleWithoutLineNumber.length >
+			fileErrorsFromCurrentCheckStyleWithoutLineNumber.length ||
+		( fileErrorsFromNewCheckStyleWithoutLineNumber.length ===
+			fileErrorsFromCurrentCheckStyleWithoutLineNumber.length &&
+			! isSame(
+				fileErrorsFromNewCheckStyleWithoutLineNumber,
+				fileErrorsFromCurrentCheckStyleWithoutLineNumber
+			) )
+	);
+};
+
 exports.getFilesWithNewErrors = (
 	newCheckStyleFileParsed,
 	currentCheckStyleFileParsed
@@ -53,14 +77,24 @@ exports.getFilesWithNewErrors = (
 	const newFilesReport = newCheckStyleFileParsed.files;
 	const currentFilesReport = currentCheckStyleFileParsed.files;
 
-	return Object.keys( newFilesReport ).reduce(
-		( acc, pathfile ) =>
-			currentFilesReport[ pathfile ] === undefined ||
-			currentFilesReport[ pathfile ] === null ||
-			newFilesReport[ pathfile ].length >
-				currentFilesReport[ pathfile ].length
-				? [ ...acc, pathfile ]
-				: acc,
-		[]
-	);
+	return Object.keys( newFilesReport ).reduce( ( acc, pathfile ) => {
+		const fileErrorsFromNewCheckStyle = newFilesReport[ pathfile ];
+		const fileErrorsFromCurrentCheckStyle = currentFilesReport[ pathfile ];
+		if (
+			typeof fileErrorsFromCurrentCheckStyle === 'undefined' ||
+			fileErrorsFromCurrentCheckStyle === null ||
+			isIntroduceNewErrors(
+				fileErrorsFromNewCheckStyle,
+				fileErrorsFromCurrentCheckStyle
+			)
+		) {
+			const newErrors = getDifferenceElements(
+				fileErrorsFromNewCheckStyle,
+				fileErrorsFromCurrentCheckStyle ?? []
+			);
+
+			return { ...acc, [ pathfile ]: newErrors };
+		}
+		return acc;
+	}, {} );
 };

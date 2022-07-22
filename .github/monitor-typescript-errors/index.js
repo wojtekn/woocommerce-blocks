@@ -37,19 +37,25 @@ const runner = async () => {
 	const currentCheckStyleFileContentParsed = parseXml(
 		currentCheckStyleFileContent
 	);
-	const { header } = generateMarkdownMessage( newCheckStyleFileParsed );
 	const filesWithNewErrors = getFilesWithNewErrors(
 		newCheckStyleFileParsed,
 		currentCheckStyleFileContentParsed
 	);
 
+	const { header, body } = generateMarkdownMessage(
+		newCheckStyleFileParsed,
+		filesWithNewErrors
+	);
+
+	const numberOfFilesWithErrors = Object.keys( filesWithNewErrors ).length;
+
 	const message =
 		header +
 		'\n' +
-		( filesWithNewErrors.length > 0
-			? `⚠️ ⚠️ This PR introduces new TS errors on ${ filesWithNewErrors.length } files: \n` +
+		( numberOfFilesWithErrors > 0
+			? `⚠️ ⚠️ This PR introduces new TS errors on ${ numberOfFilesWithErrors } files: \n` +
 			  '<details> \n' +
-			  filesWithNewErrors.join( '\n\n' ) +
+			  body +
 			  '\n' +
 			  '</details>'
 			: '🎉 🎉 This PR does not introduce new TS errors.' );
@@ -71,3 +77,20 @@ const runner = async () => {
 };
 
 runner();
+
+// const test = () => {
+// 	const newCheckStyleFile = fs.readFileSync( '../../checkstyle.xml' );
+// 	const oldCheckStyleFile = fs.readFileSync( '../../checkstyle1.xml' );
+
+// 	const parsedNewCheckStyleFile = parseXml( newCheckStyleFile );
+// 	const parsedOldCheckStyleFile = parseXml( oldCheckStyleFile );
+
+// 	const filesWithNewErrors = getFilesWithNewErrors(
+// 		parsedNewCheckStyleFile,
+// 		parsedOldCheckStyleFile
+// 	);
+
+// 	console.log( filesWithNewErrors );
+// };
+
+// test();
