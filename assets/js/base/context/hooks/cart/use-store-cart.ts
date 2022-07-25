@@ -100,7 +100,7 @@ export const defaultCartData: StoreCart = {
 	cartFees: EMPTY_CART_FEES,
 	cartItemsCount: 0,
 	cartItemsWeight: 0,
-	cartCrossSells: EMPTY_CART_CROSS_SELLS,
+	crossSellsProducts: EMPTY_CART_CROSS_SELLS,
 	cartNeedsPayment: true,
 	cartNeedsShipping: true,
 	cartItemErrors: EMPTY_CART_ITEM_ERRORS,
