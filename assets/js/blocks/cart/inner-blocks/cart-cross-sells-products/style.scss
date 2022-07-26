@@ -35,16 +35,20 @@
 				}
 			}
 
-			.wc-block-components-product-add-to-cart-button:not(.is-link) {
-				background-color: #eee;
-				color: #333;
-				margin-top: 1em;
+			.wc-block-components-product-add-to-cart {
+				justify-content: center;
 
-				&:focus,
-				&:hover {
-					background-color: #d5d5d5;
-					border-color: #d5d5d5;
+				.wc-block-components-product-add-to-cart-button:not(.is-link) {
+					background-color: #eee;
 					color: #333;
+					margin-top: 1em;
+
+					&:focus,
+					&:hover {
+						background-color: #d5d5d5;
+						border-color: #d5d5d5;
+						color: #333;
+					}
 				}
 			}
 		}

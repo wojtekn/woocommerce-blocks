@@ -15,7 +15,7 @@ import { Block as ProductName } from '../../../atomic/blocks/product-elements/ti
 import { Block as ProductRating } from '../../../atomic/blocks/product-elements/rating/block';
 import { Block as ProductSaleBadge } from '../../../atomic/blocks/product-elements/sale-badge/block';
 import { Block as ProductPrice } from '../../../atomic/blocks/product-elements/price/block';
-import { AddToCartButton } from '../../../atomic/blocks/product-elements/add-to-cart/shared';
+import AddToCartButton from '../../../atomic/blocks/product-elements/add-to-cart/block';
 
 interface CrossSellsProductProps {
 	crossSellsProduct: ProductResponseItem;
