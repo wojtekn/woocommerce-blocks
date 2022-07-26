@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { PanelBody, RangeControl } from '@wordpress/components';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { getSetting } from '@woocommerce/settings';
+import Noninteractive from '@woocommerce/base-components/noninteractive';
 
 /**
  * Internal dependencies
@@ -46,7 +47,9 @@ export const Edit = ( { attributes, setAttributes }: Props ): JSX.Element => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<Block columns={ columns } className={ className } />
+			<Noninteractive>
+				<Block columns={ columns } className={ className } />
+			</Noninteractive>
 		</div>
 	);
 };
