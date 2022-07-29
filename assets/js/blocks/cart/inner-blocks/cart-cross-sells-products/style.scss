@@ -54,3 +54,14 @@
 		}
 	}
 }
+
+@include breakpoint("<480px") {
+	.wp-block-woocommerce-cart {
+		.wp-block-woocommerce-cart-cross-sells-block {
+			.cross-sells-product {
+				display: block;
+				width: 100%;
+			}
+		}
+	}
+}
