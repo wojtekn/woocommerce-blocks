@@ -226,7 +226,7 @@ const getMainConfig = ( options = {} ) => {
 				automaticNameDelimiter: '--',
 				cacheGroups: {
 					commons: {
-						test: /[\\/]node_modules[\\/]/,
+						test: /[\/\\]node_modules[\/\\]/,
 						name: 'wc-blocks-vendors',
 						chunks: 'all',
 						enforce: true,
@@ -262,9 +262,16 @@ const getMainConfig = ( options = {} ) => {
 					{
 						from: './assets/js/blocks/**/block.json',
 						to( { absoluteFilename } ) {
-							const blockName = absoluteFilename
+							let blockName = absoluteFilename
 								.split( '/' )
 								.at( -2 );
+
+							if ( ! blockName ) {
+								// Try Windows path separators.
+								blockName = absoluteFilename
+									.split( '\\' )
+									.at( -2 );
+							}
 							return `./${ blockName }/block.json`;
 						},
 						globOptions: {
@@ -648,7 +655,7 @@ const getStylingConfig = ( options = {} ) => {
 						priority: 10,
 					},
 					vendorsStyle: {
-						test: /\/node_modules\/.*?style\.s?css$/,
+						test: /[\/\\]node_modules[\/\\].*?style\.s?css$/,
 						name: 'wc-blocks-vendors-style',
 						chunks: 'all',
 						priority: 7,
@@ -666,7 +673,7 @@ const getStylingConfig = ( options = {} ) => {
 		module: {
 			rules: [
 				{
-					test: /(\/|\\)node_modules(\/|\\).*?style\.s?css$/,
+					test: /[\/\\]node_modules[\/\\].*?style\.s?css$/,
 					use: [
 						MiniCssExtractPlugin.loader,
 						{ loader: 'css-loader', options: { importLoaders: 1 } },
