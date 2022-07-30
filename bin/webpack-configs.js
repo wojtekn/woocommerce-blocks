@@ -666,7 +666,7 @@ const getStylingConfig = ( options = {} ) => {
 		module: {
 			rules: [
 				{
-					test: /\/node_modules\/.*?style\.s?css$/,
+					test: /(\/|\\)node_modules(\/|\\).*?style\.s?css$/,
 					use: [
 						MiniCssExtractPlugin.loader,
 						{ loader: 'css-loader', options: { importLoaders: 1 } },
@@ -721,6 +721,9 @@ const getStylingConfig = ( options = {} ) => {
 									if (
 										relativePath.startsWith(
 											'assets/css/abstracts/'
+										) ||
+										relativePath.startsWith(
+											'assets\\css\\abstracts\\'
 										)
 									) {
 										return content;
