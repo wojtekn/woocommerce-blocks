@@ -121,9 +121,7 @@ class Bootstrap {
 		$this->container->get( ProductSearchResultsTemplate::class );
 		$this->container->get( ProductAttributeTemplate::class );
 		$this->container->get( ClassicTemplatesCompatibility::class );
-		if ( $this->package->feature()->is_feature_plugin_build() ) {
-			$this->container->get( PaymentsApi::class );
-		}
+		$this->container->get( PaymentsApi::class );
 	}
 
 	/**
@@ -289,16 +287,14 @@ class Bootstrap {
 				return new GoogleAnalytics( $asset_api );
 			}
 		);
-		if ( $this->package->feature()->is_feature_plugin_build() ) {
-			$this->container->register(
-				PaymentsApi::class,
-				function ( Container $container ) {
-					$payment_method_registry = $container->get( PaymentMethodRegistry::class );
-					$asset_data_registry     = $container->get( AssetDataRegistry::class );
-					return new PaymentsApi( $payment_method_registry, $asset_data_registry );
-				}
-			);
-		}
+		$this->container->register(
+			PaymentsApi::class,
+			function ( Container $container ) {
+				$payment_method_registry = $container->get( PaymentMethodRegistry::class );
+				$asset_data_registry     = $container->get( AssetDataRegistry::class );
+				return new PaymentsApi( $payment_method_registry, $asset_data_registry );
+			}
+		);
 		$this->container->register(
 			StoreApi::class,
 			function () {
