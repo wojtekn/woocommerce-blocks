@@ -196,11 +196,11 @@ final class BlockTypesController {
 			'ProductTitle',
 			'MiniCart',
 			'MiniCartContents',
+			'Checkout',
 		];
 
 		if ( Package::feature()->is_feature_plugin_build() ) {
 			$block_types[] = 'Checkout';
-			$block_types[] = 'Cart';
 		}
 
 		if ( Package::feature()->is_experimental_build() ) {
