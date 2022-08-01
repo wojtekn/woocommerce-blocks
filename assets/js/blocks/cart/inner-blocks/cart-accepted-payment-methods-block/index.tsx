@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { registerFeaturePluginBlockType } from '@woocommerce/block-settings';
+import { registerBlockType } from '@wordpress/blocks';
 import { Icon, payment } from '@wordpress/icons';
 
 /**
@@ -10,7 +10,7 @@ import { Icon, payment } from '@wordpress/icons';
 import { Edit, Save } from './edit';
 import metadata from './block.json';
 
-registerFeaturePluginBlockType( metadata, {
+registerBlockType( metadata, {
 	icon: {
 		src: (
 			<Icon
