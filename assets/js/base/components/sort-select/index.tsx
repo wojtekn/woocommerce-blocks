@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import Label from '@woocommerce/base-components/label';
 import { withInstanceId } from '@wordpress/compose';
 import { ChangeEventHandler } from 'react';
+import deprecated from '@wordpress/deprecated';
 
 /**
  * Internal dependencies
@@ -60,6 +61,21 @@ const SortSelect = ( {
 }: SortSelectProps ): JSX.Element => {
 	const selectId = `wc-block-components-sort-select__select-${ instanceId }`;
 
+	// Name this "safeOnChange" because onChange might not be a function, but we know this one will be eventually.
+	let safeOnChange = onChange;
+	if ( typeof safeOnChange !== 'function' ) {
+		safeOnChange = () => void 0;
+		deprecated(
+			'SortSelect must receive an onChange prop of type function, you passed ' +
+				typeof onChange,
+			{
+				hint: 'Pass onChange as a prop to SortSelect',
+				plugin: 'woocommerce-gutenberg-products-block',
+				link: 'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/6636',
+			}
+		);
+	}
+
 	return (
 		<div
 			className={ classNames(
@@ -78,10 +94,10 @@ const SortSelect = ( {
 					htmlFor: selectId,
 				} }
 			/>
-			<select // eslint-disable-line jsx-a11y/no-onchange
+			<select
 				id={ selectId }
 				className="wc-block-sort-select__select wc-block-components-sort-select__select"
-				onChange={ onChange }
+				onChange={ safeOnChange }
 				value={ value }
 			>
 				{ options &&
