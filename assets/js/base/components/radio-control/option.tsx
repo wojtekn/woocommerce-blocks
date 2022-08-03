@@ -2,6 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
+import deprecated from '@wordpress/deprecated';
 
 /**
  * Internal dependencies
@@ -17,8 +18,24 @@ const Option = ( {
 }: RadioControlOptionProps ): JSX.Element => {
 	const { value, label, description, secondaryLabel, secondaryDescription } =
 		option;
+
+	// Name this "safeOnChange" because onChange might not be a function, but we know this one will be eventually.
+	let safeOnChange = onChange;
+	if ( typeof safeOnChange !== 'function' ) {
+		safeOnChange = () => void 0;
+		deprecated(
+			'Option must receive an onChange prop of type function, you passed ' +
+				typeof onChange,
+			{
+				hint: 'Pass onChange as a prop to Option',
+				plugin: 'woocommerce-gutenberg-products-block',
+				link: 'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/6636',
+			}
+		);
+	}
+
 	const onChangeValue = ( event: React.ChangeEvent< HTMLInputElement > ) =>
-		onChange( event.target.value );
+		safeOnChange( event.target.value );
 
 	return (
 		<label
