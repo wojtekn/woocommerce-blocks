@@ -4,6 +4,7 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Fragment, useMemo, useState } from '@wordpress/element';
 import classNames from 'classnames';
+import deprecated from '@wordpress/deprecated';
 
 /**
  * Internal dependencies
@@ -47,6 +48,22 @@ const CheckboxList = ( {
 	limit = 10,
 }: CheckboxListProps ): JSX.Element => {
 	const [ showExpanded, setShowExpanded ] = useState( false );
+
+	// Name this "safeOnChange" because onChange might not be a function, but we know this one will be eventually.
+	const safeOnChange = useMemo( () => {
+		if ( typeof onChange !== 'function' ) {
+			deprecated(
+				'Not passing an onChange prop of type `function` to CheckboxList',
+				{
+					hint: `You passed ${ typeof onChange }. Pass onChange as a prop to CheckboxList`,
+					plugin: 'woocommerce-gutenberg-products-block',
+					link: 'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/6636',
+				}
+			);
+			return () => void 0;
+		}
+		return onChange;
+	}, [ onChange ] );
 
 	const placeholder = useMemo( () => {
 		return [ ...Array( 5 ) ].map( ( x, i ) => (
@@ -137,7 +154,7 @@ const CheckboxList = ( {
 								id={ option.value }
 								value={ option.value }
 								onChange={ ( event ) => {
-									onChange( event.target.value );
+									safeOnChange( event.target.value );
 								} }
 								checked={ checked.includes( option.value ) }
 								disabled={ isDisabled }
@@ -156,7 +173,7 @@ const CheckboxList = ( {
 		);
 	}, [
 		options,
-		onChange,
+		safeOnChange,
 		checked,
 		showExpanded,
 		limit,

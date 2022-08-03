@@ -11,35 +11,39 @@ import deprecated from '@wordpress/deprecated';
 import RadioControlOption from './option';
 import type { RadioControlProps } from './types';
 import './style.scss';
+import { useMemo } from '@wordpress/element';
 
 const RadioControl = ( {
 	className = '',
 	id,
 	selected,
-	onChange = () => void 0,
+	onChange,
 	options = [],
 }: RadioControlProps ): JSX.Element | null => {
 	const instanceId = useInstanceId( RadioControl );
 	const radioControlId = id || instanceId;
 
+	// Name this "safeOnChange" because onChange might not be a function, but we know this one will be eventually.
+	const safeOnChange = useMemo( () => {
+		if ( typeof onChange !== 'function' ) {
+			console.log( 'not a func! rc index' );
+			deprecated(
+				'Not passing an onChange prop of type `function` to RadioControl',
+				{
+					hint: `You passed ${ typeof onChange }. Pass onChange as a prop to RadioControl`,
+					plugin: 'woocommerce-gutenberg-products-block',
+					link: 'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/6636',
+				}
+			);
+			return () => void 0;
+		}
+		return onChange;
+	}, [ onChange ] );
+
 	if ( ! options.length ) {
 		return null;
 	}
 
-	// Name this "safeOnChange" because onChange might not be a function, but we know this one will be eventually.
-	let safeOnChange = onChange;
-	if ( typeof safeOnChange !== 'function' ) {
-		safeOnChange = () => void 0;
-		deprecated(
-			'RadioControl must receive an onChange prop of type function, you passed ' +
-				typeof onChange,
-			{
-				hint: 'Pass onChange as a prop to RadioControl',
-				plugin: 'woocommerce-gutenberg-products-block',
-				link: 'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/6636',
-			}
-		);
-	}
 	return (
 		<div
 			className={ classnames(

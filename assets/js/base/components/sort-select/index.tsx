@@ -11,6 +11,7 @@ import deprecated from '@wordpress/deprecated';
  * Internal dependencies
  */
 import './style.scss';
+import { useMemo } from '@wordpress/element';
 
 interface SortSelectProps {
 	/**
@@ -62,19 +63,20 @@ const SortSelect = ( {
 	const selectId = `wc-block-components-sort-select__select-${ instanceId }`;
 
 	// Name this "safeOnChange" because onChange might not be a function, but we know this one will be eventually.
-	let safeOnChange = onChange;
-	if ( typeof safeOnChange !== 'function' ) {
-		safeOnChange = () => void 0;
-		deprecated(
-			'SortSelect must receive an onChange prop of type function, you passed ' +
-				typeof onChange,
-			{
-				hint: 'Pass onChange as a prop to SortSelect',
-				plugin: 'woocommerce-gutenberg-products-block',
-				link: 'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/6636',
-			}
-		);
-	}
+	const safeOnChange = useMemo( () => {
+		if ( typeof onChange !== 'function' ) {
+			deprecated(
+				'Not passing an onChange prop of type `function` to SortSelect',
+				{
+					hint: `You passed ${ typeof onChange }. Pass onChange as a prop to SortSelect`,
+					plugin: 'woocommerce-gutenberg-products-block',
+					link: 'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/6636',
+				}
+			);
+			return () => void 0;
+		}
+		return onChange;
+	}, [ onChange ] );
 
 	return (
 		<div
