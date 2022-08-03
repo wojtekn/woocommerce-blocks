@@ -12,6 +12,7 @@ import {
 import classnames from 'classnames';
 import FormattedMonetaryAmount from '@woocommerce/base-components/formatted-monetary-amount';
 import { Currency, isObject } from '@woocommerce/types';
+import deprecated from '@wordpress/deprecated';
 
 /**
  * Internal dependencies
@@ -98,6 +99,20 @@ const PriceSlider = ( {
 		setMaxPriceInput( maxPrice );
 	}, [ maxPrice ] );
 
+	// Name this "safeOnChange" because onChange might not be a function, but we know this one will be eventually.
+	let safeOnChange = onChange;
+	if ( typeof safeOnChange !== 'function' ) {
+		safeOnChange = () => void 0;
+		deprecated(
+			'PriceSlider must receive an onChange prop of type function, you passed ' +
+				typeof onChange,
+			{
+				hint: 'Pass onChange as a prop to PriceSlider',
+				plugin: 'woocommerce-gutenberg-products-block',
+				link: 'https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/6636',
+			}
+		);
+	}
 	/**
 	 * Checks if the min and max constraints are valid.
 	 */
@@ -214,7 +229,7 @@ const PriceSlider = ( {
 				stepValue,
 				isMin
 			);
-			onChange( values );
+			safeOnChange( values );
 		},
 		[
 			onChange,
@@ -256,7 +271,7 @@ const PriceSlider = ( {
 					stepValue,
 					isMin
 				);
-				return onChange( [
+				return safeOnChange( [
 					parseInt( values[ 0 ], 10 ),
 					parseInt( values[ 1 ], 10 ),
 				] );
@@ -269,7 +284,7 @@ const PriceSlider = ( {
 				stepValue,
 				isMin
 			);
-			onChange( values );
+			safeOnChange( values );
 		},
 		[ onChange, stepValue, minPriceInput, maxPriceInput ]
 	);
