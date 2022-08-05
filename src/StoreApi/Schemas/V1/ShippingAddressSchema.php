@@ -24,6 +24,25 @@ class ShippingAddressSchema extends AbstractAddressSchema {
 	const IDENTIFIER = 'shipping-address';
 
 	/**
+	 * @var \WP_Error
+	 */
+	protected $errors = null;
+	/**
+	 * Validate the given address object.
+	 *
+	 * @param array            $address Value being sanitized.
+	 * @param \WP_REST_Request $request The Request.
+	 * @param string           $param The param being sanitized.
+	 * @return true|\WP_Error
+	 */
+	public function validate_callback( $address, $request, $param ) {
+		$this->errors  = parent::validate_callback( $address, $request, $param );
+		$this->errors  = is_wp_error( $this->errors ) ? $this->errors : new \WP_Error();
+
+		return true;// $errors->has_errors( $errors ) ? $errors : true;
+	}
+
+	/**
 	 * Convert a term object into an object suitable for the response.
 	 *
 	 * @param \WC_Order|\WC_Customer $address An object with shipping address.
@@ -52,6 +71,7 @@ class ShippingAddressSchema extends AbstractAddressSchema {
 					'postcode'   => $address->get_shipping_postcode(),
 					'country'    => $shipping_country,
 					'phone'      => $address->get_shipping_phone(),
+					'errors'	 => $this->errors instanceof \WP_Error ? $this->errors->errors : [],
 				]
 			);
 		}

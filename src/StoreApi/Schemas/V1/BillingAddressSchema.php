@@ -17,6 +17,10 @@ class BillingAddressSchema extends AbstractAddressSchema {
 	protected $title = 'billing_address';
 
 	/**
+	 * @var \WP_Error
+	 */
+	protected $errors = null;
+	/**
 	 * The schema item identifier.
 	 *
 	 * @var string
@@ -66,18 +70,18 @@ class BillingAddressSchema extends AbstractAddressSchema {
 	 * @return true|\WP_Error
 	 */
 	public function validate_callback( $address, $request, $param ) {
-		$errors  = parent::validate_callback( $address, $request, $param );
+		$this->errors  = parent::validate_callback( $address, $request, $param );
 		$address = $this->sanitize_callback( $address, $request, $param );
-		$errors  = is_wp_error( $errors ) ? $errors : new \WP_Error();
+		$this->errors  = is_wp_error( $this->errors ) ? $this->errors : new \WP_Error();
 
 		if ( ! empty( $address['email'] ) && ! is_email( $address['email'] ) ) {
-			$errors->add(
+			$this->errors->add(
 				'invalid_email',
 				__( 'The provided email address is not valid', 'woo-gutenberg-products-block' )
 			);
 		}
 
-		return $errors->has_errors( $errors ) ? $errors : true;
+		return true;// $errors->has_errors( $errors ) ? $errors : true;
 	}
 
 	/**
@@ -110,6 +114,7 @@ class BillingAddressSchema extends AbstractAddressSchema {
 					'country'    => $billing_country,
 					'email'      => $address->get_billing_email(),
 					'phone'      => $address->get_billing_phone(),
+					'errors'	 => $this->errors instanceof \WP_Error ? $this->errors->errors : [],
 				]
 			);
 		}
