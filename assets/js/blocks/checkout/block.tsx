@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
 import { createInterpolateElement, useEffect } from '@wordpress/element';
 import { useStoreCart } from '@woocommerce/base-context/hooks';
+import Button from '@woocommerce/base-components/button';
 import {
 	useCheckoutContext,
 	useValidationContext,
@@ -150,19 +151,17 @@ const Block = ( {
 			) }
 			text={ createInterpolateElement(
 				__(
-					'The checkout has encountered an unexpected error. <button>Try reloading the page</button>. If the error persists, please get in touch with us so we can assist.',
+					'The checkout has encountered an unexpected error. Try loading the page in <strong>compatiblity mode</strong>. If the error persists, please get in touch with us so we can assist.',
 					'woo-gutenberg-products-block'
 				),
 				{
-					button: (
-						<button
-							className="wc-block-link-button"
-							onClick={ reloadPage }
-						/>
-					),
+					strong: <strong />,
 				}
 			) }
 			showErrorMessage={ CURRENT_USER_IS_ADMIN }
+			button={
+				<Button onClick={ reloadPage }>Load compatiblity mode</Button>
+			}
 		>
 			<SnackbarNoticesContainer context="wc/checkout" />
 			<StoreNoticesProvider>

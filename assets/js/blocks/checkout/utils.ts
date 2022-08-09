@@ -12,4 +12,7 @@ export const isLoginRequired = ( customerId: number ): boolean => {
 	return ! customerId && ! getSetting( 'checkoutAllowsGuest', false );
 };
 
-export const reloadPage = (): void => void window.location.reload( true );
+export const reloadPage = (): void => {
+	window.history.replaceState( null, null, window.location.href );
+	window.location.href = window.location.href + '?classic';
+};

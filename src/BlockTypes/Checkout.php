@@ -79,7 +79,7 @@ class Checkout extends AbstractBlock {
 	 * @return string Rendered block type output.
 	 */
 	protected function render( $attributes, $content ) {
-		if ( $this->is_checkout_endpoint() ) {
+		if ( $this->is_checkout_endpoint() || $this->is_classic_mode() ) {
 			// Note: Currently the block only takes care of the main checkout form -- if an endpoint is set, refer to the
 			// legacy shortcode instead and do not render block.
 			return '[woocommerce_checkout]';
@@ -155,6 +155,15 @@ class Checkout extends AbstractBlock {
 	 */
 	protected function is_checkout_endpoint() {
 		return is_wc_endpoint_url( 'order-pay' ) || is_wc_endpoint_url( 'order-received' );
+	}
+
+	/**
+	 * Check if we're tying to load the shortcode checkout.
+	 *
+	 * @return boolean
+	 */
+	protected function is_classic_mode() {
+		return isset( $_GET['classic'] );
 	}
 
 	/**
